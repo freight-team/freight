@@ -371,7 +371,8 @@ apt_cache_source() {
     DEBTAR_XZ_FILENAME="${NAME}_${VERSION%*:}.debian.tar.xz"
     DEBTAR_LZMA_FILENAME="${NAME}_${VERSION%*:}.debian.tar.lzma"
     DIFFGZ_FILENAME="${NAME}_${VERSION%*:}.diff.gz"
-    ORIG_FILENAME="${NAME}_${ORIG_VERSION}.orig.tar.gz"
+    ORIG_GZ_FILENAME="${NAME}_${ORIG_VERSION}.orig.tar.gz"
+    ORIG_BZ2_FILENAME="${NAME}_${ORIG_VERSION}.orig.tar.bz2"
     TAR_FILENAME="${NAME}_${VERSION%*:}.tar.gz"
 
     # Find which style of diff they're using.
@@ -384,6 +385,12 @@ apt_cache_source() {
     elif [ -f "$VARLIB/apt/$DIST/$DIRNAME/$DEBTAR_LZMA_FILENAME" ]
     then DIFF_FILENAME=${DEBTAR_LZMA_FILENAME}
     else DIFF_FILENAME=${DIFFGZ_FILENAME}
+    fi
+
+    # Find which style of orig they're using.
+    if [ -f "$VARLIB/apt/$DIST/$DIRNAME/$ORIG_BZ2_FILENAME" ]
+    then ORIG_FILENAME=${ORIG_BZ2_FILENAME}
+    else ORIG_FILENAME=${ORIG_GZ_FILENAME}
     fi
 
     # Verify this package by ensuring the other necessary files are present.
