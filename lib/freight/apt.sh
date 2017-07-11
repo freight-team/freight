@@ -75,7 +75,7 @@ apt_sha512() {
 
 # Print the size of the given file.
 apt_filesize() {
-    stat -c%s "$1"
+    stat -c%s "$(readlink -f $1)"
 }
 
 # Setup the repository for the distro named in the first argument,
@@ -288,10 +288,8 @@ apt_cache_binary() {
             # `Size`, `MD5Sum`, etc. lines and replace them with newly
             # generated values. Update it once when generating the
             # cached control file. Add a Filename line that can be updated
-            # easily later with the real path.  Strip out empty control fields
-            # as these might cause problems.
+            # easily later with the real path.
             grep . "$TMP/DEBIAN/control" |
-            grep -E -v "^[A-Za-z-]+:\s+$" |
             grep -v "^(Essential|Filename|MD5Sum|SHA1|SHA256|SHA512|Size)"
             cat <<EOF
 Filename: FILENAME
