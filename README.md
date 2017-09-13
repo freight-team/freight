@@ -27,6 +27,10 @@ Build the cache of all the files needed to be accepted as a Debian archive:
 
 	freight cache
 
+If your system has GnuPG 2.x make sure that a gpg-agent is running or the above
+command will fail. Also make sure you have installed a pinentry package (e.g.
+pinentry-curses) that suits your needs.
+
 Serve `/var/cache/freight` via your favorite web server and install it as an APT source:
 
 	echo "deb http://example.com $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/example.list
