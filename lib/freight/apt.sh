@@ -227,6 +227,10 @@ EOF
         rm -f "$TMP"/release_last_signature.gpg
     done
 
+    # Generate the `InRelease` clear signed file from the newly created
+    # `Release` file 
+    gpg --clearsign -o "$DISTCACHE"/InRelease "$DISTCACHE"/Release
+
     # Generate `pubkey.gpg` containing the plaintext public key and
     # `keyring.gpg` containing a complete GPG keyring containing only
     # the appropriate public keys.  `keyring.gpg` is appropriate for
