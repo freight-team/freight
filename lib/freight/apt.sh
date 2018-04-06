@@ -45,7 +45,7 @@ apt_source_name() {
 
 # Print the version portion of a source package's pathname.
 apt_source_version() {
-    basename "$1" ".dsc" | cut -d_ -f2
+    basename "$1" ".dsc" | cut -d_ -f2 | sed 's/\.dsc//'
 }
 
 # Print the original version portion of a source package's pathname.
@@ -381,14 +381,27 @@ apt_cache_source() {
     ORIG_VERSION="$(apt_source_origversion "$PATHNAME")"
     DIRNAME="$(dirname "$PATHNAME")"
     DSC_FILENAME="${NAME}_${VERSION%*:}.dsc"
+
+    ORIG_GZ_FILENAME="${NAME}_${ORIG_VERSION}.orig.tar.gz"
+    ORIG_BZ2_FILENAME="${NAME}_${ORIG_VERSION}.orig.tar.bz2"
+    ORIG_XZ_FILENAME="${NAME}_${ORIG_VERSION}.orig.tar.xz"
+    ORIG_LZMA_FILENAME="${NAME}_${ORIG_VERSION}.orig.tar.lzma"
+    if [ -f "$VARLIB/apt/$DIST/$DIRNAME/$ORIG_GZ_FILENAME" ]
+    then ORIG_FILENAME=$ORIG_GZ_FILENAME
+    elif [ -f "$VARLIB/apt/$DIST/$DIRNAME/$ORIG_BZ2_FILENAME" ]
+    then ORIG_FILENAME=$ORIG_BZ2_FILENAME
+    elif [ -f "$VARLIB/apt/$DIST/$DIRNAME/$ORIG_XZ_FILENAME" ]
+    then ORIG_FILENAME=$ORIG_XZ_FILENAME
+    elif [ -f "$VARLIB/apt/$DIST/$DIRNAME/$ORIG_LZMA_FILENAME" ]
+    then ORIG_FILENAME=$ORIG_LZMA_FILENAME
+    fi
+
     DEBTAR_GZ_FILENAME="${NAME}_${VERSION%*:}.debian.tar.gz"
     DEBTAR_BZ2_FILENAME="${NAME}_${VERSION%*:}.debian.tar.bz2"
     DEBTAR_XZ_FILENAME="${NAME}_${VERSION%*:}.debian.tar.xz"
     DEBTAR_LZMA_FILENAME="${NAME}_${VERSION%*:}.debian.tar.lzma"
     DIFFGZ_FILENAME="${NAME}_${VERSION%*:}.diff.gz"
-    ORIG_FILENAME="${NAME}_${ORIG_VERSION}.orig.tar.gz"
     TAR_FILENAME="${NAME}_${VERSION%*:}.tar.gz"
-
     # Find which style of diff they're using.
     if [ -f "$VARLIB/apt/$DIST/$DIRNAME/$DEBTAR_GZ_FILENAME" ]
     then DIFF_FILENAME=${DEBTAR_GZ_FILENAME}
