@@ -11,6 +11,8 @@ The Freight configuration is a `source`d shell script that defines a few importa
   The Freight library directory.  Typically _/var/lib/freight_.
 * `VARCACHE`:
   The Freight cache directory.  Typically _/var/cache/freight_.  This should be the document root of the web server.
+* `TEMPDIR`:
+  Directory for temp files during cache updates. Typically the same as $VARCACHE or /tmp. If you set it to $VARCACHE the temporary files are accessible via the web interface for a short period of time.
 * `ARCHS`:
   The architectures to support.  Typically _i386 amd64_.
 * `ORIGIN`:

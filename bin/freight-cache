@@ -79,9 +79,12 @@ LIB="$(cd "$(dirname "$(dirname "$0")")/lib/freight" && pwd)"
 # If `GPG_DIGEST_ALGO` is unset, force it to the freight default of SHA512
 [ -z "$GPG_DIGEST_ALGO" ] && GPG_DIGEST_ALGO="SHA512"
 
-# Create a working directory on the same device as the Freight cache.
+# make sure the cache-directory exists
 mkdir -p "$VARCACHE"
-TMP="$(mktemp -d "$VARCACHE/work.$$.XXXXXXXXXX")"
+
+# Create a temporary working directory for extracting files
+mkdir -p "$TEMPDIR"
+TMP="$(mktemp -d "$TEMPDIR/work.$$.XXXXXXXXXX")"
 # shellcheck disable=SC2064
 trap "rm -rf \"$TMP\"" EXIT INT TERM
 

@@ -3,7 +3,7 @@ freight-init(1) -- initialize a Freight directory
 
 ## SYNOPSIS
 
-`freight init` [`--libdir` _varlib_] [`--cachedir` _varcache_] [`--archs` _archs_] [`--origin` _origin_] [`--label` _label_] [`-v`] [`-h`] `-g` _gpg_ _dirname_
+`freight init` [`--libdir` _varlib_] [`--cachedir` _varcache_] [`--tempdir` _tempdir_] [`--archs` _archs_] [`--origin` _origin_] [`--label` _label_] [`-v`] [`-h`] `-g` _gpg_ _dirname_
 
 ## DESCRIPTION
 
@@ -21,6 +21,8 @@ Configuration is stored in _dirname_`/etc/freight.conf`.
   VARLIB directory to use.  Defaults to _dirname_`/var/lib`
 * `--cachedir=`_varcache_:
   VARCACHE directory to use.  Defaults to _dirname_`/var/cache`
+* `--tempdir=`_tempdir:
+  Directory for temporary files.  Defaults to _dirname_`/var/cache`
 * `--archs=`_archs_:
   Architectures to generate archives for.  Defaults to `i386 amd64`
 * `--origin=`_origin_:

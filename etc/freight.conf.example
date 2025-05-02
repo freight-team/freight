@@ -5,6 +5,12 @@
 VARLIB="/var/lib/freight"
 VARCACHE="/var/cache/freight"
 
+# The dir used for temp files when regenerating the cache. It's efficient
+# to set this to the same value as VARCACHE, but that will expose temp files
+# for a short period of time to the outside world. To avoid this, set it
+# to something else (for example /tmp)
+TEMPDIR="/var/cache/freight"
+
 # Default `Origin`, `Label`, `NotAutomatic`, and
 # `ButAutomaticUpgrades` fields for `Release` files.
 ORIGIN="Freight"

@@ -5,6 +5,7 @@
 # web server's document root should be `$VARCACHE`.
 VARLIB="/var/lib/freight"
 VARCACHE="/var/cache/freight"
+TEMPDIR="/var/cache/freight"
 
 # Default architectures.
 # shellcheck disable=SC2034
@@ -55,5 +56,6 @@ fi
 # Normalize directory names.
 VARLIB=${VARLIB%%/}
 VARCACHE=${VARCACHE%%/}
+TEMPDIR=${TEMPDIR%%/}
 
 # vim: et:ts=4:sw=4

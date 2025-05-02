@@ -2,11 +2,12 @@
 
 # Initialize a Freight directory (similar to git init).
 
-#/ Usage: freight init -g<email> [--libdir=<libdir>] [--cachedir=<cachedir>] [--archs=<archs>] [--origin=<origin>] [--label=<label>] [-v] [-h] [<dirname>]
+#/ Usage: freight init -g<email> [--libdir=<libdir>] [--cachedir=<cachedir>] [--tempdir=<tempdir>] [--archs=<archs>] [--origin=<origin>] [--label=<label>] [-v] [-h] [<dirname>]
 #/   -g<email>, --gpg=<email> GPG key to use
 #/   -c<conf>, --conf=<conf>  config file to create (default etc/freight.conf)
 #/   --libdir=<libdir>        library directory (default var/lib/freight)
 #/   --cachedir=<cachedir>    cache directory (default var/cache/freight)
+#/   --tempdir=<tempdir>      temp directory (default same as cachedir)
 #/   --archs=<archs>          architectures to support (default "i386 amd64")
 #/   --origin=<origin>        Debian archive Origin field (default "Freight")
 #/   --label=<label>          Debian archive Label field (default "Freight")
@@ -56,6 +57,8 @@ while [ "$#" -gt 0 ]; do
         --libdir=*) VARLIB="$(echo "$1" | cut -c"10-")" shift ;;
         --cachedir) VARCACHE="$2" shift 2 ;;
         --cachedir=*) VARCACHE="$(echo "$1" | cut -c"12-")" shift ;;
+        --tempdir) TEMPDIR="$2" shift 2 ;;
+        --tempdir=*) TEMPDIR="$(echo "$1" | cut -c"12-")" shift ;;
         --archs) ARCHS="$2" shift 2 ;;
         --archs=*) ARCHS="$(echo "$1" | cut -c"9-")" shift ;;
         --origin) ORIGIN="$2" shift 2 ;;
@@ -80,6 +83,7 @@ DIRNAME="$(cd "${1:-"."}" && pwd)"
 # follows the FHS style.
 VARLIB="${VARLIB:-"$DIRNAME/var/lib"}"
 VARCACHE="${VARCACHE:-"$DIRNAME/var/cache"}"
+TEMPDIR="${TEMPDIR:-"$DIRNAME/var/cache"}"
 
 # Create the directory where `CONF` will be placed.  This is likely given
 # relative to `DIRNAME` so change to that directory to make things easy.
@@ -91,6 +95,7 @@ mkdir -p "$(dirname "$CONF")"
 cat >"$CONF" <<EOF
 VARLIB="$VARLIB"
 VARCACHE="$VARCACHE"
+TEMPDIR="$TEMPDIR"
 GPG="$GPG"
 EOF
 [ "$ARCHS" ] && echo "ARCHS=\"$ARCHS\"" >>"$CONF"
